@@ -1,0 +1,981 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{main}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy}
+        \PY{k+kn}{import} \PY{n+nn}{pandas}
+        \PY{k+kn}{import} \PY{n+nn}{os}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{dates} \PY{k}{as} \PY{n+nn}{mdates}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{warnings}
+        \PY{k+kn}{import} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{as} \PY{n+nn}{stat}
+        \PY{k+kn}{import} \PY{n+nn}{calendar}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        \PY{k+kn}{import} \PY{n+nn}{xgboost} \PY{k}{as} \PY{n+nn}{xb}
+        \PY{k+kn}{from} \PY{n+nn}{xgboost} \PY{k}{import} \PY{n}{plot\PYZus{}tree}
+        \PY{k+kn}{from} \PY{n+nn}{xgboost} \PY{k}{import} \PY{n}{plot\PYZus{}importance}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{mean\PYZus{}absolute\PYZus{}error}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{feature\PYZus{}selection} \PY{k}{import} \PY{n}{SelectFromModel}
+        \PY{n}{warnings}\PY{o}{.}\PY{n}{filterwarnings}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ignore}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+
+    \hypertarget{data-exploration}{%
+\section{Data exploration}\label{data-exploration}}
+
+\begin{itemize}
+\tightlist
+\item
+  Missing values
+\item
+  Visualize
+\end{itemize}
+
+Note that due to lack of knowledge what we wanna do with the data at the
+moment, we wont remove values that might be irrelevant or show a low
+significane.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Load data}
+        \PY{n}{path} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{getcwd}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/E0.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{raw\PYZus{}df} \PY{o}{=} \PY{n}{pandas}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{path}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Inital view at the data}
+        \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} (380, 65)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Option to get a look at all columns}
+        \PY{n}{pandas}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{display.max\PYZus{}columns}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{65}\PY{p}{)}
+        \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:}   Div      Date        HomeTeam    AwayTeam  FTHG  FTAG FTR  HTHG  HTAG HTR  \textbackslash{}
+        0  E0  13/08/16         Burnley     Swansea     0     1   A     0     0   D   
+        1  E0  13/08/16  Crystal Palace   West Brom     0     1   A     0     0   D   
+        2  E0  13/08/16         Everton   Tottenham     1     1   D     1     0   H   
+        3  E0  13/08/16            Hull   Leicester     2     1   H     1     0   H   
+        4  E0  13/08/16        Man City  Sunderland     2     1   H     1     0   H   
+        5  E0  13/08/16   Middlesbrough       Stoke     1     1   D     1     0   H   
+        6  E0  13/08/16     Southampton     Watford     1     1   D     0     1   A   
+        7  E0  14/08/16         Arsenal   Liverpool     3     4   A     1     1   D   
+        8  E0  14/08/16     Bournemouth  Man United     1     3   A     0     1   A   
+        9  E0  15/08/16         Chelsea    West Ham     2     1   H     0     0   D   
+        
+              Referee  HS  AS  HST  AST  HF  AF  HC  AC  HY  AY  HR  AR  B365H  B365D  \textbackslash{}
+        0      J Moss  10  17    3    9  10  14   7   4   3   2   0   0   2.40   3.30   
+        1    C Pawson  14  13    4    3  12  15   3   6   2   2   0   0   2.00   3.30   
+        2  M Atkinson  12  13    6    4  10  14   5   6   0   0   0   0   3.20   3.40   
+        3      M Dean  14  18    5    5   8  17   5   3   2   2   0   0   4.50   3.60   
+        4    R Madley  16   7    4    3  11  14   9   6   1   2   0   0   1.25   6.50   
+        5    K Friend  12  12    2    1  18  14   9   6   3   5   0   0   2.38   3.20   
+        6      R East  24   5    6    1   8  12   6   2   1   2   0   1   1.80   3.75   
+        7    M Oliver   9  16    5    7  13  17   5   4   3   3   0   0   2.40   3.50   
+        8  A Marriner   9  11    3    7   7  10   4   2   0   1   0   0   4.75   3.60   
+        9    A Taylor  16   7    6    3  16  16   7   1   5   2   0   0   1.65   4.00   
+        
+           B365A   BWH   BWD    BWA   IWH  IWD    IWA   LBH   LBD    LBA   PSH   PSD  \textbackslash{}
+        0   3.25  2.45  3.10   2.95  2.50  3.3   2.65  2.45  3.25   3.10  2.47  3.32   
+        1   4.50  2.00  3.20   3.90  2.10  3.3   3.30  2.00  3.25   4.33  2.06  3.29   
+        2   2.40  2.95  3.20   2.40  2.65  3.3   2.50  3.10  3.40   2.40  3.25  3.43   
+        3   1.91  4.33  3.40   1.90  3.30  3.3   2.10  4.50  3.50   1.91  4.43  3.55   
+        4  15.00  1.22  6.00  11.50  1.25  5.5  10.30  1.25  6.50  13.00  1.27  6.48   
+        5   3.40  2.25  3.10   3.25  2.30  3.3   2.90  2.30  3.20   3.40  2.33  3.24   
+        6   5.00  1.80  3.40   4.50  1.80  3.5   4.20  1.80  3.60   5.00  1.88  3.68   
+        7   3.10  2.35  3.30   2.90  2.30  3.3   2.90  2.38  3.40   3.10  2.41  3.53   
+        8   1.85  4.60  3.50   1.75  4.50  3.5   1.75  4.80  3.60   1.80  4.70  3.62   
+        9   6.00  1.60  3.75   5.50  1.65  3.6   5.10  1.62  4.00   6.00  1.68  4.16   
+        
+             PSA   WHH   WHD    WHA   VCH  VCD    VCA  Bb1X2  BbMxH  BbAvH  BbMxD  \textbackslash{}
+        0   3.19  2.50  3.20   2.90  2.50  3.2   3.25     55   2.55   2.43   3.35   
+        1   4.32  2.05  3.10   4.00  2.00  3.3   4.40     56   2.10   2.01   3.40   
+        2   2.37  3.10  3.10   2.40  3.25  3.4   2.38     55   3.30   3.12   3.45   
+        3   1.95  4.20  3.25   1.95  4.40  3.5   1.95     55   4.50   4.17   3.60   
+        4  13.15  1.25  5.50  13.00  1.25  6.5  15.00     56   1.30   1.25   6.80   
+        5   3.53  2.40  3.10   3.10  2.38  3.2   3.40     56   2.40   2.31   3.30   
+        6   4.64  1.83  3.40   4.50  1.83  3.6   5.00     56   1.88   1.82   3.80   
+        7   3.10  2.50  3.10   3.00  2.40  3.5   3.10     55   2.50   2.36   3.55   
+        8   1.88  4.50  3.40   1.85  4.75  3.6   1.87     55   5.00   4.50   3.75   
+        9   5.48  1.67  3.60   5.50  1.65  4.1   5.75     52   1.71   1.64   4.25   
+        
+           BbAvD  BbMxA  BbAvA  BbOU  BbMx>2.5  BbAv>2.5  BbMx<2.5  BbAv<2.5  BbAH  \textbackslash{}
+        0   3.21   3.30   3.10    40      2.40      2.30      1.68      1.61    32   
+        1   3.23   4.50   4.16    38      2.68      2.50      1.60      1.52    33   
+        2   3.32   2.50   2.36    41      2.12      2.05      1.87      1.77    32   
+        3   3.43   2.33   1.95    40      2.30      2.19      1.74      1.67    31   
+        4   6.11  15.00  12.55    39      1.56      1.53      2.67      2.48    34   
+        5   3.16   3.65   3.38    38      2.61      2.46      1.57      1.53    32   
+        6   3.56   5.00   4.62    42      2.13      2.06      1.83      1.75    33   
+        7   3.42   3.20   3.04    42      1.98      1.81      2.09      1.99    31   
+        8   3.51   1.95   1.86    42      2.11      2.05      1.87      1.76    33   
+        9   3.97   6.00   5.46    40      1.97      1.80      2.09      2.01    33   
+        
+           BbAHh  BbMxAHH  BbAvAHH  BbMxAHA  BbAvAHA  PSCH  PSCD   PSCA  
+        0  -0.25     2.13     2.06     1.86     1.81  2.79  3.16   2.89  
+        1  -0.50     2.07     2.00     1.90     1.85  2.25  3.15   3.86  
+        2   0.25     1.91     1.85     2.09     2.00  3.64  3.54   2.16  
+        3   0.25     2.35     2.26     2.03     1.67  4.68  3.50   1.92  
+        4  -1.50     1.81     1.73     2.20     2.14  1.25  6.50  14.50  
+        5  -0.25     1.99     1.93     1.97     1.92  2.20  3.38   3.70  
+        6  -0.75     2.16     2.07     1.89     1.80  1.80  3.83   4.91  
+        7  -0.50     2.41     2.31     1.81     1.64  2.80  3.44   2.68  
+        8   0.75     1.80     1.76     2.17     2.11  5.40  3.65   1.78  
+        9  -1.00     2.20     2.10     1.80     1.76  1.52  4.38   7.45  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} Get info and stats on dataframe. Will show Nan\PYZsq{}s here.}
+        \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
+        \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 380 entries, 0 to 379
+Data columns (total 65 columns):
+Div         380 non-null object
+Date        380 non-null object
+HomeTeam    380 non-null object
+AwayTeam    380 non-null object
+FTHG        380 non-null int64
+FTAG        380 non-null int64
+FTR         380 non-null object
+HTHG        380 non-null int64
+HTAG        380 non-null int64
+HTR         380 non-null object
+Referee     380 non-null object
+HS          380 non-null int64
+AS          380 non-null int64
+HST         380 non-null int64
+AST         380 non-null int64
+HF          380 non-null int64
+AF          380 non-null int64
+HC          380 non-null int64
+AC          380 non-null int64
+HY          380 non-null int64
+AY          380 non-null int64
+HR          380 non-null int64
+AR          380 non-null int64
+B365H       380 non-null float64
+B365D       380 non-null float64
+B365A       380 non-null float64
+BWH         380 non-null float64
+BWD         380 non-null float64
+BWA         380 non-null float64
+IWH         380 non-null float64
+IWD         380 non-null float64
+IWA         380 non-null float64
+LBH         380 non-null float64
+LBD         380 non-null float64
+LBA         380 non-null float64
+PSH         380 non-null float64
+PSD         380 non-null float64
+PSA         380 non-null float64
+WHH         380 non-null float64
+WHD         380 non-null float64
+WHA         380 non-null float64
+VCH         380 non-null float64
+VCD         380 non-null float64
+VCA         380 non-null float64
+Bb1X2       380 non-null int64
+BbMxH       380 non-null float64
+BbAvH       380 non-null float64
+BbMxD       380 non-null float64
+BbAvD       380 non-null float64
+BbMxA       380 non-null float64
+BbAvA       380 non-null float64
+BbOU        380 non-null int64
+BbMx>2.5    380 non-null float64
+BbAv>2.5    380 non-null float64
+BbMx<2.5    380 non-null float64
+BbAv<2.5    380 non-null float64
+BbAH        380 non-null int64
+BbAHh       380 non-null float64
+BbMxAHH     380 non-null float64
+BbAvAHH     380 non-null float64
+BbMxAHA     380 non-null float64
+BbAvAHA     380 non-null float64
+PSCH        380 non-null float64
+PSCD        380 non-null float64
+PSCA        380 non-null float64
+dtypes: float64(39), int64(19), object(7)
+memory usage: 193.0+ KB
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:}              FTHG        FTAG        HTHG        HTAG          HS          AS  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     1.597368    1.202632    0.705263    0.510526   14.013158   11.484211   
+        std      1.306971    1.227862    0.857974    0.753108    5.878033    5.019462   
+        min      0.000000    0.000000    0.000000    0.000000    3.000000    1.000000   
+        25\%      1.000000    0.000000    0.000000    0.000000   10.000000    8.000000   
+        50\%      1.000000    1.000000    0.000000    0.000000   13.000000   11.000000   
+        75\%      2.000000    2.000000    1.000000    1.000000   17.000000   14.000000   
+        max      6.000000    7.000000    4.000000    4.000000   37.000000   29.000000   
+        
+                      HST         AST          HF          AF          HC          AC  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     4.813158    3.855263   11.063158   11.657895    5.678947    4.734211   
+        std      2.817086    2.383452    3.468853    3.556378    3.084916    2.702562   
+        min      0.000000    0.000000    2.000000    3.000000    0.000000    0.000000   
+        25\%      3.000000    2.000000    9.000000    9.000000    3.000000    3.000000   
+        50\%      4.000000    3.000000   11.000000   12.000000    5.000000    4.000000   
+        75\%      6.000000    5.000000   13.000000   14.000000    8.000000    6.000000   
+        max     17.000000   15.000000   24.000000   24.000000   19.000000   15.000000   
+        
+                       HY          AY          HR          AR       B365H       B365D  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     1.744737    1.886842    0.055263    0.052632    2.977658    4.225789   
+        std      1.256371    1.301647    0.240050    0.223591    2.092902    1.275209   
+        min      0.000000    0.000000    0.000000    0.000000    1.090000    3.100000   
+        25\%      1.000000    1.000000    0.000000    0.000000    1.670000    3.400000   
+        50\%      2.000000    2.000000    0.000000    0.000000    2.200000    3.750000   
+        75\%      3.000000    3.000000    0.000000    0.000000    3.400000    4.500000   
+        max      6.000000    6.000000    2.000000    1.000000   13.000000   13.000000   
+        
+                    B365A         BWH         BWD         BWA         IWH         IWD  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     5.136553    2.865789    4.107316    4.768763    2.797263    4.013947   
+        std      4.455430    1.887470    1.174748    3.812068    1.773871    1.015508   
+        min      1.250000    1.090000    3.000000    1.280000    1.120000    3.100000   
+        25\%      2.300000    1.620000    3.400000    2.237500    1.650000    3.350000   
+        50\%      3.600000    2.150000    3.650000    3.500000    2.125000    3.600000   
+        75\%      5.750000    3.262500    4.347500    5.500000    3.150000    4.200000   
+        max     29.000000   10.000000   11.000000   26.000000   11.000000    9.000000   
+        
+                      IWA         LBH         LBD         LBA         PSH         PSD  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     4.568737    2.877211    4.059132    4.918526    2.993579    4.275132   
+        std      3.545908    1.927703    1.087730    4.130898    2.087193    1.325755   
+        min      1.300000    1.100000    3.000000    1.220000    1.100000    3.050000   
+        25\%      2.300000    1.642500    3.300000    2.250000    1.670000    3.430000   
+        50\%      3.400000    2.200000    3.600000    3.500000    2.225000    3.770000   
+        75\%      5.225000    3.300000    4.330000    5.500000    3.352500    4.592500   
+        max     20.000000   12.000000    9.500000   29.000000   11.510000   13.620000   
+        
+                      PSA         WHH         WHD         WHA         VCH         VCD  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     5.144605    2.929737    3.930895    4.952368    2.986737    4.216632   
+        std      4.365601    1.965851    1.045153    4.105301    2.114494    1.229187   
+        min      1.290000    1.100000    2.900000    1.290000    1.110000    3.000000   
+        25\%      2.275000    1.670000    3.250000    2.300000    1.665000    3.400000   
+        50\%      3.650000    2.250000    3.500000    3.500000    2.200000    3.750000   
+        75\%      5.772500    3.325000    4.232500    5.500000    3.400000    4.600000   
+        max     28.490000   11.000000    9.000000   26.000000   13.000000   11.500000   
+        
+                      VCA       Bb1X2       BbMxH       BbAvH       BbMxD       BbAvD  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     5.181079   48.913158    3.105395    2.902079    4.379684    4.114947   
+        std      4.548754    4.485136    2.226111    1.949385    1.371611    1.164309   
+        min      1.250000   40.000000    1.120000    1.090000    3.150000    3.020000   
+        25\%      2.300000   45.000000    1.707500    1.650000    3.500000    3.357500   
+        50\%      3.600000   49.000000    2.275000    2.200000    3.850000    3.660000   
+        75\%      5.750000   52.000000    3.500000    3.275000    4.712500    4.410000   
+        max     31.000000   57.000000   13.000000   10.780000   13.620000   11.350000   
+        
+                    BbMxA       BbAvA        BbOU    BbMx>2.5    BbAv>2.5    BbMx<2.5  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     5.522526    4.929289   43.039474    1.952553    1.875211    2.105974   
+        std      5.091953    4.146819    3.295639    0.288647    0.268653    0.382517   
+        min      1.310000    1.280000   30.000000    1.300000    1.250000    1.520000   
+        25\%      2.400000    2.267500   41.000000    1.757500    1.690000    1.850000   
+        50\%      3.700000    3.500000   43.000000    1.920000    1.845000    2.050000   
+        75\%      6.000000    5.535000   45.000000    2.130000    2.050000    2.250000   
+        max     32.750000   26.640000   50.000000    2.850000    2.680000    4.320000   
+        
+                 BbAv<2.5        BbAH       BbAHh     BbMxAHH     BbAvAHH     BbMxAHA  \textbackslash{}
+        count  380.000000  380.000000  380.000000  380.000000  380.000000  380.000000   
+        mean     2.011105   26.563158   -0.328289    2.014895    1.950447    1.988711   
+        std      0.345828    4.810796    0.930087    0.191261    0.173408    0.176265   
+        min      1.460000   17.000000   -2.750000    1.610000    1.560000    1.580000   
+        25\%      1.770000   23.000000   -1.000000    1.880000    1.827500    1.870000   
+        50\%      1.970000   26.000000   -0.250000    1.990000    1.930000    1.980000   
+        75\%      2.162500   30.000000    0.250000    2.110000    2.050000    2.110000   
+        max      3.870000   37.000000    1.750000    2.690000    2.500000    2.580000   
+        
+                  BbAvAHA        PSCH        PSCD        PSCA  
+        count  380.000000  380.000000  380.000000  380.000000  
+        mean     1.927500    3.037895    4.324000    5.106605  
+        std      0.164643    2.211916    1.430417    4.209724  
+        min      1.550000    1.120000    3.010000    1.160000  
+        25\%      1.820000    1.650000    3.400000    2.305000  
+        50\%      1.930000    2.230000    3.765000    3.580000  
+        75\%      2.040000    3.392500    4.602500    5.955000  
+        max      2.470000   18.000000   12.000000   25.500000  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} See how many games each team has played.}
+        \PY{n}{games} \PY{o}{=} \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{HomeTeam}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{AwayTeam}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{Counter}\PY{p}{(}\PY{n}{games}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} Counter(\{'Burnley': 38,
+                 'Crystal Palace': 38,
+                 'Everton': 38,
+                 'Hull': 38,
+                 'Man City': 38,
+                 'Middlesbrough': 38,
+                 'Southampton': 38,
+                 'Arsenal': 38,
+                 'Bournemouth': 38,
+                 'Chelsea': 38,
+                 'Man United': 38,
+                 'Leicester': 38,
+                 'Stoke': 38,
+                 'Swansea': 38,
+                 'Tottenham': 38,
+                 'Watford': 38,
+                 'West Brom': 38,
+                 'Sunderland': 38,
+                 'West Ham': 38,
+                 'Liverpool': 38\})
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{} All teams have played same amount of matches, so that is well balanced.}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} Check if we only look at games from one division, and remove that redundant column.}
+        \PY{n}{divs} \PY{o}{=} \PY{n}{raw\PYZus{}df}\PY{p}{[}\PY{p}{(}\PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{Div}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{str}\PY{p}{)} \PY{o}{!=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{E0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{Div}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}
+        
+        \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{divs}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{More than one divison}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{All matches are same div, lets delete that column.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{raw\PYZus{}df} \PY{o}{=} \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Div}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Date}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+All matches are same div, lets delete that column.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} Check for obvious patterns, such as similar distributiuons,}
+         \PY{c+c1}{\PYZsh{} sparse features and other relationship between features.}
+         
+         \PY{n}{df\PYZus{}num} \PY{o}{=} \PY{n}{raw\PYZus{}df}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{include}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{float64}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{int64}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{df\PYZus{}num}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,} \PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Generally one would look at correlations in the data at this point.
+Since we don't have a specific goal with the assignment, we can't
+concude what relationships are interesting, and thus what features could
+be removed or if we should consider polynomial combinations of the
+features
+
+    \hypertarget{filter-for-arsenal}{%
+\section{Filter for Arsenal}\label{filter-for-arsenal}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{} Fitler dataframe for all matches were Arsenal plays.}
+         \PY{n}{afc\PYZus{}df} \PY{o}{=} \PY{n}{raw\PYZus{}df}\PY{p}{[}\PY{p}{(}\PY{n}{raw\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HomeTeam}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Arsenal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{o}{|}
+                         \PY{p}{(}\PY{n}{raw\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AwayTeam}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Arsenal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{]}
+         \PY{n}{afc\PYZus{}df}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{pandas}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{afc\PYZus{}df}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n+nb}{format}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{/}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{m/}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{afc\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n}{afc\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(38, 63)
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:}              HomeTeam     AwayTeam  FTHG  FTAG FTR  HTHG  HTAG HTR  \textbackslash{}
+         Date                                                                 
+         2016-08-14    Arsenal    Liverpool     3     4   A     1     1   D   
+         2016-08-20  Leicester      Arsenal     0     0   D     0     0   D   
+         2016-08-27    Watford      Arsenal     1     3   A     0     3   A   
+         2016-09-10    Arsenal  Southampton     2     1   H     1     1   D   
+         2016-09-17       Hull      Arsenal     1     4   A     0     1   A   
+         
+                           Referee  HS  AS  HST  AST  HF  AF  HC  AC  HY  AY  HR  AR  \textbackslash{}
+         Date                                                                          
+         2016-08-14       M Oliver   9  16    5    7  13  17   5   4   3   3   0   0   
+         2016-08-20  M Clattenburg   8  13    1    4  11   7   2   7   1   2   0   0   
+         2016-08-27       K Friend  14  10    6    7  18  15   3   2   6   1   0   0   
+         2016-09-10       R Madley  17  11    2    5  10   8   6   1   2   5   0   0   
+         2016-09-17         R East   6  24    2    9   9  12   2   4   0   2   1   0   
+         
+                     B365H  B365D  B365A   BWH   BWD   BWA   IWH  IWD   IWA   LBH  \textbackslash{}
+         Date                                                                       
+         2016-08-14   2.40   3.50   3.10  2.35  3.30  2.90  2.30  3.3  2.90  2.38   
+         2016-08-20   2.88   3.60   2.50  2.75  3.60  2.45  2.75  3.3  2.40  2.90   
+         2016-08-27   5.00   3.75   1.73  5.00  3.75  1.72  4.50  3.5  1.75  5.00   
+         2016-09-10   1.57   4.20   6.50  1.55  4.20  6.00  1.55  3.9  5.60  1.57   
+         2016-09-17   6.00   4.20   1.60  6.00  4.00  1.57  5.50  4.0  1.60  6.00   
+         
+                      LBD   LBA   PSH   PSD   PSA   WHH   WHD   WHA   VCH   VCD   VCA  \textbackslash{}
+         Date                                                                           
+         2016-08-14  3.40  3.10  2.41  3.53  3.10  2.50  3.10  3.00  2.40  3.50  3.10   
+         2016-08-20  3.60  2.40  2.92  3.60  2.50  2.88  3.20  2.50  2.90  3.60  2.50   
+         2016-08-27  3.75  1.75  5.47  3.91  1.72  4.60  3.75  1.73  5.25  3.90  1.73   
+         2016-09-10  4.20  6.50  1.60  4.35  6.15  1.62  3.50  6.50  1.57  4.33  6.50   
+         2016-09-17  4.20  1.57  6.03  4.20  1.60  6.00  3.60  1.62  6.50  4.10  1.60   
+         
+                     Bb1X2  BbMxH  BbAvH  BbMxD  BbAvD  BbMxA  BbAvA  BbOU  BbMx>2.5  \textbackslash{}
+         Date                                                                          
+         2016-08-14     55   2.50   2.36   3.55   3.42   3.20   3.04    42      1.98   
+         2016-08-20     56   3.00   2.87   3.63   3.48   2.55   2.45    42      1.74   
+         2016-08-27     55   5.50   5.12   3.91   3.72   1.78   1.72    43      2.00   
+         2016-09-10     56   1.63   1.57   4.39   4.15   6.50   5.98    45      1.85   
+         2016-09-17     57   6.50   5.94   4.27   4.05   1.64   1.59    46      1.96   
+         
+                     BbAv>2.5  BbMx<2.5  BbAv<2.5  BbAH  BbAHh  BbMxAHH  BbAvAHH  \textbackslash{}
+         Date                                                                      
+         2016-08-14      1.81      2.09      1.99    31  -0.50     2.41     2.31   
+         2016-08-20      1.69      2.24      2.16    32   0.25     1.83     1.78   
+         2016-08-27      1.91      1.97      1.87    33   1.00     1.72     1.67   
+         2016-09-10      1.79      2.10      2.02    36  -1.00     2.00     1.95   
+         2016-09-17      1.87      2.00      1.92    36   1.00     1.89     1.85   
+         
+                     BbMxAHA  BbAvAHA  PSCH  PSCD  PSCA  
+         Date                                            
+         2016-08-14     1.81     1.64  2.80  3.44  2.68  
+         2016-08-20     2.15     2.10  2.82  3.50  2.63  
+         2016-08-27     2.34     2.24  6.00  4.16  1.63  
+         2016-09-10     1.96     1.90  1.63  4.17  6.05  
+         2016-09-17     2.07     2.00  6.12  4.19  1.62  
+\end{Verbatim}
+            
+    \hypertarget{ploting-of-arsenal-goals}{%
+\section{Ploting of Arsenal goals}\label{ploting-of-arsenal-goals}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{} Helperfunction to determine if arsenal is home or away.}
+         \PY{k}{def} \PY{n+nf}{arsenal\PYZus{}goals}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HomeTeam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Arsenal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FTHG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{k}{if} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AwayTeam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Arsenal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FTAG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{return} \PY{k+kc}{None}
+         
+         \PY{n}{afc\PYZus{}goals} \PY{o}{=} \PY{n}{afc\PYZus{}df}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{row}\PY{p}{:} \PY{n}{arsenal\PYZus{}goals}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} Plot the goals per game }
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+         \PY{n}{afc\PYZus{}goals}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bar}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                        \PY{n}{title}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Goals per game for Arsenal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Goals}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} Group by month and sum goals from each match in each group.}
+         \PY{n}{month\PYZus{}goals} \PY{o}{=} \PY{n}{afc\PYZus{}goals}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{p}{[}\PY{n}{afc\PYZus{}goals}\PY{o}{.}\PY{n}{index}\PY{o}{.}\PY{n}{month}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+         \PY{n}{month\PYZus{}goals}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bar}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                          \PY{n}{title}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Goals per game for Arsenal for a given month}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Goals}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Month \PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} Get Arsenal goal away and at home}
+         \PY{n}{afc\PYZus{}home} \PY{o}{=} \PY{n}{raw\PYZus{}df}\PY{p}{[}\PY{p}{(}\PY{n}{raw\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HomeTeam}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Arsenal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{FTHG}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+         \PY{n}{afc\PYZus{}away} \PY{o}{=} \PY{n}{raw\PYZus{}df}\PY{p}{[}\PY{p}{(}\PY{n}{raw\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AwayTeam}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Arsenal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{FTAG}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{} Calculate the means.}
+         \PY{n}{mean\PYZus{}away} \PY{o}{=} \PY{n}{afc\PYZus{}away}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+         \PY{n}{mean\PYZus{}home} \PY{o}{=} \PY{n}{afc\PYZus{}home}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Arsenal scored }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ on average on away field}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{mean\PYZus{}away}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Arsenal scored }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ on average on home field}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{mean\PYZus{}home}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Arsenal scored 2.0 on average on away field
+Arsenal scored 2.0526315789473686 on average on home field
+
+    \end{Verbatim}
+
+    \hypertarget{correlation-between-corner-kicks}{%
+\section{Correlation between corner
+kicks}\label{correlation-between-corner-kicks}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{} Calcuate correlation between home corners and away corners.}
+         
+         \PY{c+c1}{\PYZsh{} Pandas way for pearson}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Pearson Coefficient: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{df\PYZus{}num}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{df\PYZus{}num}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{method}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pearson}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Spearman rank coefficient.}
+         \PY{n}{sig} \PY{o}{=} \PY{l+m+mf}{0.05}
+         \PY{n}{r\PYZus{}s} \PY{o}{=} \PY{n}{stat}\PY{o}{.}\PY{n}{spearmanr}\PY{p}{(}\PY{n}{df\PYZus{}num}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{p}{,} \PY{n}{df\PYZus{}num}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Spearman Rank Coefficient: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{r\PYZus{}s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         
+         \PY{k}{if} \PY{n}{r\PYZus{}s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{sig}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{There is significant evidence of a relationship.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{else}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{There is not significant evidence of a relationship.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Pearson Coefficient: -0.2957242276759231
+
+Spearman Rank Coefficient:  -0.30267167904563874
+There is significant evidence of a relationship.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{} Plot the correlation.}
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{regplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{df\PYZus{}num}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{model-for-predicting-corner-kicks}{%
+\section{Model for predicting corner
+kicks}\label{model-for-predicting-corner-kicks}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{} Given our extremely sparse dataset we will pick a simple model, as we can }
+         \PY{c+c1}{\PYZsh{} easily overfit a complicated model on such small datapoints.}
+         
+         \PY{c+c1}{\PYZsh{} I will create a simple boosting gradient model that takes the numerical data from our dataframe as input.}
+         \PY{c+c1}{\PYZsh{} It will determine the importance of each feature, and retrain a model with only the most significant features.}
+         \PY{c+c1}{\PYZsh{} Other stuff such as correlational analysis of the features could have been done, and for instance, we might}
+         \PY{c+c1}{\PYZsh{} see that some features have a polynomial relationsship which you coud have taken advatage off before feeding data}
+         \PY{c+c1}{\PYZsh{} to the model. We will leave this for another time, and keep it simple here. Hyperparameter optimizationn isn\PYZsq{}t done}
+         \PY{c+c1}{\PYZsh{} but if one wanted to be more advanced they coud use bayesian hyperparameter optimization. Or somethink simpler }
+         \PY{c+c1}{\PYZsh{} like a grid search.}
+         
+         \PY{k}{def} \PY{n+nf}{grad\PYZus{}boost}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{)}\PY{p}{:}
+         
+             \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{9}
+             \PY{n}{test\PYZus{}size} \PY{o}{=} \PY{l+m+mf}{0.10}
+             \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{,}
+             \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{n}{test\PYZus{}size}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+         
+             \PY{n}{model} \PY{o}{=} \PY{n}{xb}\PY{o}{.}\PY{n}{XGBClassifier}\PY{p}{(}\PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{n}{seed}\PY{p}{)}
+             \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+         
+             \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+             \PY{n}{predictions} \PY{o}{=} \PY{p}{[}\PY{n+nb}{round}\PY{p}{(}\PY{n}{value}\PY{p}{)} \PY{k}{for} \PY{n}{value} \PY{o+ow}{in} \PY{n}{y\PYZus{}pred}\PY{p}{]}
+         
+             \PY{n}{base\PYZus{}MAE} \PY{o}{=} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{predictions}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Baseline MAE: }\PY{l+s+si}{\PYZpc{}.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{base\PYZus{}MAE}\PY{p}{)}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{}Example of visualizing importance of features based on decision trees in the algo}
+             \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+             \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{)}
+         
+         
+             \PY{c+c1}{\PYZsh{}Sorting features in terms of importance.}
+             \PY{n}{thresholds} \PY{o}{=} \PY{n}{numpy}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{feature\PYZus{}importances\PYZus{}}\PY{p}{)}
+         
+             \PY{k}{for} \PY{n}{thresh} \PY{o+ow}{in} \PY{n}{thresholds}\PY{p}{[}\PY{l+m+mi}{10}\PY{p}{:}\PY{p}{]}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} select features using threshold}
+                 \PY{n}{selection} \PY{o}{=} \PY{n}{SelectFromModel}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{threshold}\PY{o}{=}\PY{n}{thresh}\PY{p}{,} \PY{n}{prefit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+                 \PY{n}{select\PYZus{}X\PYZus{}train} \PY{o}{=} \PY{n}{selection}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} train model}
+                 \PY{n}{selection\PYZus{}model} \PY{o}{=} \PY{n}{xb}\PY{o}{.}\PY{n}{XGBClassifier}\PY{p}{(}\PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{n}{seed}\PY{p}{)}
+                 \PY{n}{selection\PYZus{}model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{select\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} eval model}
+                 \PY{n}{select\PYZus{}X\PYZus{}test} \PY{o}{=} \PY{n}{selection}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+                 \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{selection\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{select\PYZus{}X\PYZus{}test}\PY{p}{)}
+                 \PY{n}{predictions} \PY{o}{=} \PY{p}{[}\PY{n+nb}{round}\PY{p}{(}\PY{n}{value}\PY{p}{)} \PY{k}{for} \PY{n}{value} \PY{o+ow}{in} \PY{n}{y\PYZus{}pred}\PY{p}{]}
+                 \PY{n}{MAE} \PY{o}{=} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{predictions}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} print if greater that the baseline model}
+                 \PY{k}{if} \PY{n}{MAE} \PY{o}{\PYZlt{}} \PY{n}{base\PYZus{}MAE}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Thresh=}\PY{l+s+si}{\PYZpc{}.3f}\PY{l+s+s2}{, n=}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{, MAE: }\PY{l+s+si}{\PYZpc{}.2f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{thresh}\PY{p}{,} \PY{n}{select\PYZus{}X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                     \PY{n}{MAE}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{} Get total cornerkicks in a game.}
+         \PY{n}{df\PYZus{}num}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}num}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{+} \PY{n}{df\PYZus{}num}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{y} \PY{o}{=} \PY{n}{df\PYZus{}num}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}
+         \PY{n}{Xs} \PY{o}{=} \PY{n}{df\PYZus{}num}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{X} \PY{o}{=} \PY{n}{Xs}\PY{o}{.}\PY{n}{values}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{grad\PYZus{}boost}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+XGBClassifier(base\_score=0.5, booster='gbtree', colsample\_bylevel=1,
+       colsample\_bytree=1, gamma=0, learning\_rate=0.1, max\_delta\_step=0,
+       max\_depth=3, min\_child\_weight=1, missing=None, n\_estimators=100,
+       n\_jobs=1, nthread=None, objective='multi:softprob', random\_state=0,
+       reg\_alpha=0, reg\_lambda=1, scale\_pos\_weight=1, seed=9, silent=True,
+       subsample=1)
+
+Baseline MAE: 2.500
+Thresh=0.005, n=47, MAE: 2.45
+Thresh=0.007, n=43, MAE: 2.34
+Thresh=0.007, n=43, MAE: 2.34
+Thresh=0.007, n=40, MAE: 2.45
+Thresh=0.008, n=39, MAE: 2.39
+Thresh=0.008, n=39, MAE: 2.39
+Thresh=0.013, n=27, MAE: 2.39
+Thresh=0.018, n=23, MAE: 2.34
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
